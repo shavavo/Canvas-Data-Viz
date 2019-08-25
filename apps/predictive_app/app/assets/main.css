@@ -1,0 +1,244 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.gridHeader {
+    height: 10vh;
+
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    /* grid-template-rows: 50% 50%; */
+
+    width: 100%;
+    margin: auto;
+
+    column-gap: 10px;
+}
+
+.gridContainer {
+    height: 90vh;
+
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 5% 32.5% 5% 32.5% 5% 20%;
+}
+
+.gridTitle {
+    grid-column: 1/4;
+    text-align: center;
+
+
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: flex-end;
+}
+
+.gridTitle > H5{
+    margin: 0;
+    align-self: flex-end;
+}
+
+.modebar{
+    display: none !important;
+}
+
+.detailedView {
+    position: absolute;
+    height: 90vh;
+    width: 100%;
+    
+    top: 10vh;
+    
+
+    background-color: white;
+    /* box-shadow: 5px 5px 10px grey; */
+
+    border-top: 1px solid lightgrey;
+}
+
+
+.detailedView2 {
+    position: absolute;
+    width: 100%;
+    height: 38%;
+
+    top: 10vh;
+    
+
+    background-color: white;
+    box-shadow: 5px 5px 10px lightgrey;
+
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+
+
+h4 {
+    margin: 0;
+}
+
+.tableSideBySide {
+    width: 90%;
+    margin-left: 5%;
+    /* margin-top: 6rem; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 5% 95%;
+    column-gap: 10px;
+}
+
+.triple-dropdown {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 33.3% 33.3% 33.3%;
+    column-gap: 10px;
+
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    height: 18vh;
+
+    border-bottom: 1px solid lightgrey;
+}
+
+.overview-graph {
+    height: 80vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+label[for="select-all-checkbox"] {
+    display:none;
+}
+
+.counts-percent-button {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.margin-1rem {
+    margin-top: 1rem;
+}
+
+._dash-undo-redo {
+    display: none;
+}
+
+.selector {
+    height: 95vh;
+    background-color: #E8E8E8; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.close_selector {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.data_category_btns {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.pp_questions {
+    height: 95vh;
+    width: 100vw;
+    top: 0vh;
+    
+    position: absolute;
+    background-color: white;
+}
+
+.pp_container {
+    margin: 5rem;
+    /* display: flex; */
+
+}
+
+.downloadButton {
+    position: absolute;
+    right: 1%;
+}
+
+.paddingLeft {
+    padding-left: 2.5rem;
+}
+
+th, td {
+    padding: 12px 15px !important;
+    text-align: left !important;
+    border: 0px !important;
+    border-bottom: 1px solid #E1E1E1 !important; 
+    font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+
+
+th {
+    padding: 12px 15px !important;
+    font-weight: bold !important;
+    /* background-color: rgb(197, 197, 197) !important; */
+}
+
+table {
+    border-collapse: separate;
+}
+
+#class____all_selected div {
+    overflow-y: none !important;
+}
+
+::-webkit-scrollbar-track
+{
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+    border-radius: 10px;
+    /* background-color: rgb(197, 197, 197); */
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    /* background-color: rgb(197, 197, 197); */
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+    background-color: gray;
+}
+
+tr th {
+    position: sticky;
+    top: 0;
+}
+
+th:after {
+    content:'';
+    position:absolute;
+    left: 0;
+    bottom: 0;
+    width:100%;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+.dropdown-spacing {
+    padding-bottom: 3px;
+}
+
+#class____all_selected, #dimred____all_selected, #class____currently_selected, #dimred____currently_selected {
+    height: calc(100% - 50px);
+}

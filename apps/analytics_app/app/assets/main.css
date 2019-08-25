@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.gridHeader {
+    height: 10vh;
+
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    /* grid-template-rows: 50% 50%; */
+
+    width: 100%;
+    margin: auto;
+
+    column-gap: 10px;
+}
+
+.gridContainer {
+    height: 90vh;
+
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 5% 32.5% 5% 32.5% 5% 20%;
+}
+
+.gridTitle {
+    grid-column: 1/4;
+    text-align: center;
+
+
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: flex-end;
+}
+
+.gridTitle > H5{
+    margin: 0;
+    align-self: flex-end;
+}
+
+.modebar{
+    display: none !important;
+}
+
+.detailedView {
+    position: absolute;
+    height: 90vh;
+    width: 100%;
+    
+    top: 10vh;
+    
+
+    background-color: white;
+    /* box-shadow: 5px 5px 10px grey; */
+
+    border-top: 1px solid lightgrey;
+}
+
+
+.detailedView2 {
+    position: absolute;
+    width: 100%;
+    height: 38%;
+
+    top: 10vh;
+    
+
+    background-color: white;
+    box-shadow: 5px 5px 10px lightgrey;
+
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+
+
+h4 {
+    margin: 0;
+}
+
+.tableSideBySide {
+    width: 90%;
+    margin-left: 5%;
+    /* margin-top: 6rem; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 5% 95%;
+    column-gap: 10px;
+}
+
+.triple-dropdown {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 33.3% 33.3% 33.3%;
+    column-gap: 10px;
+
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    height: 18vh;
+
+    border-bottom: 1px solid lightgrey;
+}
+
+.overview-graph {
+    height: 80vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+label[for="select-all-checkbox"] {
+    display:none;
+}
+
+.counts-percent-button {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+}
+
