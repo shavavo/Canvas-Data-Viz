@@ -125,3 +125,22 @@ label[for="select-all-checkbox"] {
     right: 2rem;
 }
 
+th, td {
+    padding: 12px 15px !important;
+    text-align: left !important;
+    border: 0px !important;
+    border-bottom: 1px solid #E1E1E1 !important; 
+    font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+
+
+th {
+    padding: 12px 15px !important;
+    font-weight: bold !important;
+    /* background-color: rgb(197, 197, 197) !important; */
+}
+
+table {
+    border-collapse: separate;
+}

@@ -29,7 +29,7 @@ import numpy as np
 db = canvasModels.init_db(sqlCredentials)
 
 colors = ['#e5e523', '#1f9274', '#36226a']
-canvas = Canvas(canvasCredentials.API_URL, canvasCredentials.API_KEY)
+# canvas = Canvas(canvasCredentials.API_URL, canvasCredentials.API_KEY)
 
 def graph(id, y, title):
     return dcc.Graph(
@@ -94,6 +94,10 @@ def get_section_to_rating_assignments(sections):
 
     return section_to_rating_assignment
 
+years = ['2018', '2019']
+years_dropdown = [{'label': y, 'value': x} for x, y in enumerate(years)]
+
+
 sections = Sections.select()
 sections_dropdown = [{'label': y.name, 'value': x} for x, y in enumerate(sections)]
 sections_dropdown.append({'label': 'All Sections', 'value': len(sections_dropdown)})
@@ -109,49 +113,62 @@ import pandas as pd
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
 
 layout = html.Div([
-    html.Div([
-        html.Div([
-             html.Div([
+
+
+    html.Div(children=[
+        html.Div(children=[
+        
+
+            html.Div([
                 html.Button('Counts', 
                     id='units_button',
                     style={'marginRight': '10px'}
                 ),
                 html.Button('All', 
                     id='data_button',
+                    style={'display': 'none'}
                 ),
-            ], style={'marginTop':'5vh', 'transform':'translateY(-50%)', 'marginLeft': '1rem'}),
+            ], style={'position': 'absolute', 'top': '50%', 'transform': 'translateY(-50%)', 'right': '2rem'}),
 
-            html.Div([
-                dcc.Dropdown(
-                    id='section-dropdown',
-                    options=sections_dropdown,
-                    value=0,
-                ),
-            ], style={'marginTop': 'auto', 'marginBottom':'auto'}),
-
-            html.Div([
-                dcc.Dropdown(
-                    id='case-dropdown',
-                    value=0,
-                ),
-            ], style={'marginTop': 'auto', 'marginBottom':'auto'}),
-
-            html.Div([
-                # html.Button('Refresh', 
-                #     id='refresh_button',
-                #     style={}
-                # ),
-            ], style={'marginTop':'5vh', 'transform':'translateY(-50%)', 'marginRight': '4rem', 'marginLeft': 'auto'}),
+            html.Div(children=[
+                html.Div(children=[
+                    html.H5('Year', style={'marginBottom': '0rem'}),
+                    dcc.Dropdown(
+                        id='year-dropdown',
+                        options=years_dropdown,
+                        value=0,
+                    ),
+                ], style={'paddingLeft': '2rem', 'flex': '1 1 auto'}),
 
 
-        ], className="gridHeader"),
-    ], style={'position': 'relative', 'border-bottom': '1px solid lightgrey'}),
+                html.Div(children=[
+                    html.H5('Section', style={'marginBottom': '0rem'}),
+                    dcc.Dropdown(
+                        id='section-dropdown',
+                        options=sections_dropdown,
+                        value=len(sections_dropdown) - 1,
+                    ),
+                ], style={'paddingLeft': '2rem', 'flex': '1 1 auto'}),
+
+                html.Div(children=[
+                    html.H5('Case', style={'marginBottom': '0rem'}),
+                    html.Div([
+                        dcc.Dropdown(
+                            id='case-dropdown',
+                            value=0,
+                        ),
+                    ], style={'marginTop': 'auto', 'marginBottom':'auto'}),
+                ], style={'paddingLeft': '2rem', 'flex': '1 1 auto'}),
+            ], style={'display': 'flex', 'width': '50%'})
+               
+        ], style={'width': '100%', 'display': 'flex', 'align-items': 'center', 'position': 'relative'})
+    ], style={'width': '100%', 'height':'12vh', 'display': 'flex', 'align-items': 'center', 'border-bottom': '1px solid lightgrey'}),
     
     
     html.Div([
         html.Div([
-            html.H5(
-                children="Pre-discussion Ratings",
+            html.H3(
+                children="Discussion Ratings",
             ),
             
         ], className="gridTitle"),
@@ -168,39 +185,39 @@ layout = html.Div([
             graph("Pre-Organization", [0, 0, 0], "Organization")
         ]),
 
-        html.Div([
-            html.H5(
-                children="Post-discussion Ratings",
-            ),
-        ], className="gridTitle"),
+        # html.Div([
+        #     html.H5(
+        #         children="Post-discussion Ratings",
+        #     ),
+        # ], className="gridTitle"),
 
-        html.Div([
-            graph("Post-Technology", [0, 0, 0], "Technology")
-        ], style={'border-right': '1px solid lightgrey'}),
+        # html.Div([
+        #     graph("Post-Technology", [0, 0, 0], "Technology")
+        # ], style={'border-right': '1px solid lightgrey'}),
 
-        html.Div([
-            graph("Post-Market", [0, 0, 0], "Market")
-        ], style={'border-right': '1px solid lightgrey'}),
+        # html.Div([
+        #     graph("Post-Market", [0, 0, 0], "Market")
+        # ], style={'border-right': '1px solid lightgrey'}),
 
-        html.Div([
-            graph("Post-Organization", [0, 0, 0], "Organization")
-        ]),
+        # html.Div([
+        #     graph("Post-Organization", [0, 0, 0], "Organization")
+        # ]),
 
-        html.Div([
-            html.H5(
-                children="Change in Ratings",
-            ),
-        ], className="gridTitle"),
+        # html.Div([
+        #     html.H5(
+        #         children="Change in Ratings",
+        #     ),
+        # ], className="gridTitle"),
 
-        html.Div([
-            delta_graph("delta-Technology", [0, 0, 0], "Organization")
-        ], style={'border-right': '1px solid lightgrey'}),
-        html.Div([
-            delta_graph("delta-Market", [0, 0, 0], "Organization")
-        ], style={'border-right': '1px solid lightgrey'}),
-        html.Div([
-            delta_graph("delta-Organization", [0, 0, 0], "Organization")
-        ]),
+        # html.Div([
+        #     delta_graph("delta-Technology", [0, 0, 0], "Organization")
+        # ], style={'border-right': '1px solid lightgrey'}),
+        # html.Div([
+        #     delta_graph("delta-Market", [0, 0, 0], "Organization")
+        # ], style={'border-right': '1px solid lightgrey'}),
+        # html.Div([
+        #     delta_graph("delta-Organization", [0, 0, 0], "Organization")
+        # ]),
 
     ], className="gridContainer"),
     
@@ -230,61 +247,61 @@ layout = html.Div([
         ], style={'width':'90%', 'margin':'auto', 'top':'50%', 'transform':'translateY(-50%)', 'position':'relative'})
     ], className='detailedView2', id='tableView', style={'display': 'none'}),
 
-    html.Div([
-        html.Button('Close', 
-            id='close_delta_button',
-            style={'position': 'absolute', 'bottom': '1rem', 'right': '1rem'}
-        ),
+    # html.Div([
+    #     html.Button('Close', 
+    #         id='close_delta_button',
+    #         style={'position': 'absolute', 'bottom': '1rem', 'right': '1rem'}
+    #     ),
         
 
-        dcc.Loading(children=[
-            html.Div([
-                dcc.Tabs(id="tabs", children=[
-                    dcc.Tab(label='Switched To', children=[
-                        html.Div([
+    #     dcc.Loading(children=[
+    #         html.Div([
+    #             dcc.Tabs(id="tabs", children=[
+    #                 dcc.Tab(label='Switched To', children=[
+    #                     html.Div([
                             
-                                dt.DataTable(
-                                    id='delta_datatable1',
-                                    data=[{'Loading...': 'Retrieving Data...'}], # initialise the rows
-                                    row_selectable=False,
-                                    filtering=True,
-                                    sorting=True,
-                                    style_table={'height': '25vh', 'overflowY': 'scroll'},
-                                    style_data={'whiteSpace': 'normal'},
-                                    css=[{
-                                        'selector': '.dash-cell div.dash-cell-value',
-                                        'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
-                                    }],
-                                ),
-                                html.Div('', id='delta_data1', style={'display': 'none'}),
+    #                             dt.DataTable(
+    #                                 id='delta_datatable1',
+    #                                 data=[{'Loading...': 'Retrieving Data...'}], # initialise the rows
+    #                                 row_selectable=False,
+    #                                 filtering=True,
+    #                                 sorting=True,
+    #                                 style_table={'height': '25vh', 'overflowY': 'scroll'},
+    #                                 style_data={'whiteSpace': 'normal'},
+    #                                 css=[{
+    #                                     'selector': '.dash-cell div.dash-cell-value',
+    #                                     'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
+    #                                 }],
+    #                             ),
+    #                             html.Div('', id='delta_data1', style={'display': 'none'}),
                         
-                        ]),
-                    ]),
+    #                     ]),
+    #                 ]),
 
-                    dcc.Tab(label='Switched From', children=[
-                        html.Div([
+    #                 dcc.Tab(label='Switched From', children=[
+    #                     html.Div([
                         
-                                dt.DataTable(
-                                    id='delta_datatable2',
-                                    data=[{'Loading...': 'Retrieving Data...'}], # initialise the rows
-                                    row_selectable=False,
-                                    filtering=True,
-                                    sorting=True,
-                                    style_table={'height': '25vh', 'overflowY': 'scroll'},
-                                    style_data={'whiteSpace': 'normal'},
-                                    css=[{
-                                        'selector': '.dash-cell div.dash-cell-value',
-                                        'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
-                                    }],
-                                ),
-                                html.Div('', id='delta_data2', style={'display': 'none'}),
+    #                             dt.DataTable(
+    #                                 id='delta_datatable2',
+    #                                 data=[{'Loading...': 'Retrieving Data...'}], # initialise the rows
+    #                                 row_selectable=False,
+    #                                 filtering=True,
+    #                                 sorting=True,
+    #                                 style_table={'height': '25vh', 'overflowY': 'scroll'},
+    #                                 style_data={'whiteSpace': 'normal'},
+    #                                 css=[{
+    #                                     'selector': '.dash-cell div.dash-cell-value',
+    #                                     'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
+    #                                 }],
+    #                             ),
+    #                             html.Div('', id='delta_data2', style={'display': 'none'}),
                             
-                        ]),
-                    ])
-                ])
-            ], style={'width': '90%', 'margin': 'auto'}),
-        ], style={'width':'90%', 'margin':'4rem', 'top':'50%', 'transform':'translateY(-50%)', 'position':'relative'})
-    ], className='detailedView2', id='deltaTableView', style={'display':'none'}),
+    #                     ]),
+    #                 ])
+    #             ])
+    #         ], style={'width': '90%', 'margin': 'auto'}),
+    #     ], style={'width':'90%', 'margin':'4rem', 'top':'50%', 'transform':'translateY(-50%)', 'position':'relative'})
+    # ], className='detailedView2', id='deltaTableView', style={'display':'none'}),
 
     html.Div('', id='selectedSection', style={'display':'none'}),
     html.Div('', id='ratings', style={'display':'none'}),
@@ -466,6 +483,10 @@ def get_rating_counts(section, section_to_rating_assignments, assignment_selecti
     return ratings_counts_all, ratings_counts 
 
 def get_justifications(rating_counts, pre_or_post, rating_type, rating_tier, selected_assignment_name, selected_section):
+    global db
+    db.close()
+    db.connect()
+
     label = '{}-discussion: {} - {}'.format(pre_or_post, rating_type, rating_tier)
 
 
@@ -720,6 +741,10 @@ def update_case_dropdown(value):
 def update_ratings(selectedCase, options, selected_section, old_refresh_count, data_btn):
     global db
 
+ 
+    if selectedCase not in [x['value'] for x in options]:
+        return 'null'
+
     if selectedCase not in [x['label'] for x in options] and isinstance(selectedCase, int):
         return 'null'
 
@@ -843,7 +868,8 @@ def create_bar_update_callback(pre_or_post, rating_type):
         return get_figure(rating_counts, pre_or_post, rating_type, units)
     return callback
 
-output_elements = ['Pre-Technology', 'Pre-Market', 'Pre-Organization', 'Post-Technology', 'Post-Market','Post-Organization']
+# output_elements = ['Pre-Technology', 'Pre-Market', 'Pre-Organization', 'Post-Technology', 'Post-Market','Post-Organization']
+output_elements = ['Pre-Technology', 'Pre-Market', 'Pre-Organization']
 for output_element in output_elements:
     arg_split = output_element.split('-')
     dynamically_generated_function = create_bar_update_callback(arg_split[0], arg_split[1])
@@ -852,39 +878,39 @@ for output_element in output_elements:
         [Input('ratings', 'children'), Input('units_button', 'children'), Input('data_button', 'children')] 
     )(dynamically_generated_function)
 
-# Create callbacks for 3 bar graphs
-def create_delta_update_callback(rating_type):
-    def callback(value, units, data):
-        if value is None:
-            return {}
+# # Create callbacks for 3 bar graphs
+# def create_delta_update_callback(rating_type):
+#     def callback(value, units, data):
+#         if value is None:
+#             return {}
 
-        if value == 'null':
-            return {
-                'data': [
-                    {'x': ['Low', 'Medium', 'High'], 'y': [0, 0, 0], 'type': 'bar', 'marker': dict(color=colors)},
-                ],
+#         if value == 'null':
+#             return {
+#                 'data': [
+#                     {'x': ['Low', 'Medium', 'High'], 'y': [0, 0, 0], 'type': 'bar', 'marker': dict(color=colors)},
+#                 ],
                 
-                'layout': {
-                    'margin': {'t': 0, 'b': 25},
-                    'yaxis': {'range': [-5, 5]},
+#                 'layout': {
+#                     'margin': {'t': 0, 'b': 25},
+#                     'yaxis': {'range': [-5, 5]},
                 
-                },
-            }
+#                 },
+#             }
 
-        rating_counts = json.loads(value)[data]
+#         rating_counts = json.loads(value)[data]
 
 
-        return get_delta_figure(rating_counts, rating_type)
-    return callback
+#         return get_delta_figure(rating_counts, rating_type)
+#     return callback
 
-output_elements = ['delta-Technology', 'delta-Market', 'delta-Organization']
-for output_element in output_elements:
-    arg_split = output_element.split('-')
-    dynamically_generated_function = create_delta_update_callback(arg_split[1])
-    app.callback(
-        Output(output_element, 'figure'), 
-        [Input('ratings', 'children'), Input('units_button', 'children'), Input('data_button', 'children')] 
-    )(dynamically_generated_function)
+# output_elements = ['delta-Technology', 'delta-Market', 'delta-Organization']
+# for output_element in output_elements:
+#     arg_split = output_element.split('-')
+#     dynamically_generated_function = create_delta_update_callback(arg_split[1])
+#     app.callback(
+#         Output(output_element, 'figure'), 
+#         [Input('ratings', 'children'), Input('units_button', 'children'), Input('data_button', 'children')] 
+#     )(dynamically_generated_function)
 
 # Handle bar graph clicking
 @app.callback(Output('previous_clickData', 'children'),
@@ -914,137 +940,137 @@ def update_tableview(data, style):
 
     return {'display':'none'}
 
-# Handle bar graph clicking
-@app.callback(Output('previous_delta_clickData', 'children'),
-              [Input('close_delta_button', 'n_clicks'), last_clicked('delta-Technology', 'delta-Market', 'delta-Organization')])
-def update_onclickdelta_callback(nclicks, last_clickdata):
-    if last_clickdata is None: 
-        return '[]'
+# # Handle bar graph clicking
+# @app.callback(Output('previous_delta_clickData', 'children'),
+#               [Input('close_delta_button', 'n_clicks'), last_clicked('delta-Technology', 'delta-Market', 'delta-Organization')])
+# def update_onclickdelta_callback(nclicks, last_clickdata):
+#     if last_clickdata is None: 
+#         return '[]'
 
-    click_data = last_clickdata["last_clicked_data"]
-    clicked_id = last_clickdata["last_clicked"]
+#     click_data = last_clickdata["last_clicked_data"]
+#     clicked_id = last_clickdata["last_clicked"]
 
-    if click_data is None:
-        return '[]'
+#     if click_data is None:
+#         return '[]'
 
-    data = [clicked_id, click_data['points'][0]['x']]
+#     data = [clicked_id, click_data['points'][0]['x']]
 
-    return json.dumps(data)
+#     return json.dumps(data)
 
-# Show side-by-side table
-@app.callback(Output('deltaTableView', 'style'), [Input('previous_delta_clickData', 'children')], [State('deltaTableView', 'style')])
-def update_deltatableview(data, style):
-    if data == '[]':
-        return {'display':'none'}
+# # Show side-by-side table
+# @app.callback(Output('deltaTableView', 'style'), [Input('previous_delta_clickData', 'children')], [State('deltaTableView', 'style')])
+# def update_deltatableview(data, style):
+#     if data == '[]':
+#         return {'display':'none'}
 
-    if style=={'display':'none'}:
-        return {}
+#     if style=={'display':'none'}:
+#         return {}
 
-    return {'display':'none'}
+#     return {'display':'none'}
 
-@app.callback(Output('delta_data1', 'children'), 
-    [Input('deltaTableView', 'style')], 
-    [State('ratings_students', 'children'), State('previous_delta_clickData', 'children')]
-)
-def dd1(style, ratings_raw, data_raw):
-    if data_raw == '[]':
-        return '{}'
+# @app.callback(Output('delta_data1', 'children'), 
+#     [Input('deltaTableView', 'style')], 
+#     [State('ratings_students', 'children'), State('previous_delta_clickData', 'children')]
+# )
+# def dd1(style, ratings_raw, data_raw):
+#     if data_raw == '[]':
+#         return '{}'
     
-    data = json.loads(data_raw)
-    rating_type = data[0].replace('delta-', '')
-    rating = data[1]
+#     data = json.loads(data_raw)
+#     rating_type = data[0].replace('delta-', '')
+#     rating = data[1]
 
-    ratings_students = json.loads(ratings_raw)
+#     ratings_students = json.loads(ratings_raw)
 
-    graph = pd.DataFrame(columns=['Name', 'Pre-Rating', 'Pre-Evidence', 'Post-Rating', 'Post-Evidence'])
+#     graph = pd.DataFrame(columns=['Name', 'Pre-Rating', 'Pre-Evidence', 'Post-Rating', 'Post-Evidence'])
 
-    student_keys = list(ratings_students.keys())
-    random.shuffle(student_keys)
+#     student_keys = list(ratings_students.keys())
+#     random.shuffle(student_keys)
 
-    for student in student_keys:
-        try:
-            pre_rating = ratings_students[student][rating_type]['Pre']
-            post_rating = ratings_students[student][rating_type]['Post']
-        except KeyError:
-            continue
+#     for student in student_keys:
+#         try:
+#             pre_rating = ratings_students[student][rating_type]['Pre']
+#             post_rating = ratings_students[student][rating_type]['Post']
+#         except KeyError:
+#             continue
 
-        if pre_rating['Rating']!=rating and post_rating['Rating']==rating:
-            graph = graph.append({
-                'Name': Students.get_by_id(student).name, 
-                'Pre-Rating': pre_rating['Rating'], 
-                'Pre-Evidence':pre_rating['Justification'],
-                'Post-Rating': post_rating['Rating'], 
-                'Post-Evidence':post_rating['Justification'],
-            }, ignore_index=True)
+#         if pre_rating['Rating']!=rating and post_rating['Rating']==rating:
+#             graph = graph.append({
+#                 'Name': Students.get_by_id(student).name, 
+#                 'Pre-Rating': pre_rating['Rating'], 
+#                 'Pre-Evidence':pre_rating['Justification'],
+#                 'Post-Rating': post_rating['Rating'], 
+#                 'Post-Evidence':post_rating['Justification'],
+#             }, ignore_index=True)
 
-    return json.dumps(graph.to_dict('records'))
+#     return json.dumps(graph.to_dict('records'))
 
-@app.callback(Output('delta_datatable1', 'data'), [Input('delta_data1', 'children')])
-def update_side1(data_raw):
-    data = json.loads(data_raw)
-    return pd.DataFrame(data).to_dict('records')
+# @app.callback(Output('delta_datatable1', 'data'), [Input('delta_data1', 'children')])
+# def update_side1(data_raw):
+#     data = json.loads(data_raw)
+#     return pd.DataFrame(data).to_dict('records')
 
-@app.callback(Output('delta_datatable1', 'columns'), [Input('delta_data1', 'children')])
-def update_side1columns(data):
-    just = json.loads(data)
-    columns = list(reversed([{"name": i, "id": i} for i in pd.DataFrame(just).columns]))
-    for i, x in enumerate(columns):
-        if(x["name"]=="Name"):
-            columns.insert(0, columns.pop(columns.index(x)))
-            break
-    return columns
+# @app.callback(Output('delta_datatable1', 'columns'), [Input('delta_data1', 'children')])
+# def update_side1columns(data):
+#     just = json.loads(data)
+#     columns = list(reversed([{"name": i, "id": i} for i in pd.DataFrame(just).columns]))
+#     for i, x in enumerate(columns):
+#         if(x["name"]=="Name"):
+#             columns.insert(0, columns.pop(columns.index(x)))
+#             break
+#     return columns
 
-@app.callback(Output('delta_data2', 'children'), 
-    [Input('deltaTableView', 'style')], 
-    [State('ratings_students', 'children'), State('previous_delta_clickData', 'children')]
-)
-def dd2(style, ratings_raw, data_raw):
-    if data_raw == '[]':
-        return '{}'
+# @app.callback(Output('delta_data2', 'children'), 
+#     [Input('deltaTableView', 'style')], 
+#     [State('ratings_students', 'children'), State('previous_delta_clickData', 'children')]
+# )
+# def dd2(style, ratings_raw, data_raw):
+#     if data_raw == '[]':
+#         return '{}'
     
-    data = json.loads(data_raw)
-    rating_type = data[0].replace('delta-', '')
-    rating = data[1]
+#     data = json.loads(data_raw)
+#     rating_type = data[0].replace('delta-', '')
+#     rating = data[1]
 
-    ratings_students = json.loads(ratings_raw)
+#     ratings_students = json.loads(ratings_raw)
 
-    graph = pd.DataFrame(columns=['Name', 'Pre-Rating', 'Pre-Evidence', 'Post-Rating', 'Post-Evidence'])
+#     graph = pd.DataFrame(columns=['Name', 'Pre-Rating', 'Pre-Evidence', 'Post-Rating', 'Post-Evidence'])
 
-    student_keys = list(ratings_students.keys())
-    random.shuffle(student_keys)
+#     student_keys = list(ratings_students.keys())
+#     random.shuffle(student_keys)
 
-    for student in student_keys:
-        try:
-            pre_rating = ratings_students[student][rating_type]['Pre']
-            post_rating = ratings_students[student][rating_type]['Post']
-        except KeyError:
-            continue
+#     for student in student_keys:
+#         try:
+#             pre_rating = ratings_students[student][rating_type]['Pre']
+#             post_rating = ratings_students[student][rating_type]['Post']
+#         except KeyError:
+#             continue
 
-        if pre_rating['Rating']==rating and post_rating['Rating']!=rating:
-            graph = graph.append({
-                'Name': Students.get_by_id(student).name, 
-                'Pre-Rating': pre_rating['Rating'], 
-                'Pre-Evidence':pre_rating['Justification'],
-                'Post-Rating': post_rating['Rating'], 
-                'Post-Evidence':post_rating['Justification'],
-            }, ignore_index=True)
+#         if pre_rating['Rating']==rating and post_rating['Rating']!=rating:
+#             graph = graph.append({
+#                 'Name': Students.get_by_id(student).name, 
+#                 'Pre-Rating': pre_rating['Rating'], 
+#                 'Pre-Evidence':pre_rating['Justification'],
+#                 'Post-Rating': post_rating['Rating'], 
+#                 'Post-Evidence':post_rating['Justification'],
+#             }, ignore_index=True)
             
-    return json.dumps(graph.to_dict('records'))
+#     return json.dumps(graph.to_dict('records'))
 
-@app.callback(Output('delta_datatable2', 'data'), [Input('delta_data2', 'children')])
-def update_side2(data_raw):
-    data = json.loads(data_raw)
-    return pd.DataFrame(data).to_dict('records')
+# @app.callback(Output('delta_datatable2', 'data'), [Input('delta_data2', 'children')])
+# def update_side2(data_raw):
+#     data = json.loads(data_raw)
+#     return pd.DataFrame(data).to_dict('records')
 
-@app.callback(Output('delta_datatable2', 'columns'), [Input('delta_data2', 'children')])
-def update_side2columns(data):
-    just = json.loads(data)
-    columns = list(reversed([{"name": i, "id": i} for i in pd.DataFrame(just).columns]))
-    for i, x in enumerate(columns):
-        if(x["name"]=="Name"):
-            columns.insert(0, columns.pop(columns.index(x)))
-            break
-    return columns
+# @app.callback(Output('delta_datatable2', 'columns'), [Input('delta_data2', 'children')])
+# def update_side2columns(data):
+#     just = json.loads(data)
+#     columns = list(reversed([{"name": i, "id": i} for i in pd.DataFrame(just).columns]))
+#     for i, x in enumerate(columns):
+#         if(x["name"]=="Name"):
+#             columns.insert(0, columns.pop(columns.index(x)))
+#             break
+#     return columns
    
 
 @app.callback(Output('tab_label1', 'label'), 

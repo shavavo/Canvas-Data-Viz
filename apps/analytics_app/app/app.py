@@ -5,7 +5,7 @@ import flask
 
 app = flask.Flask(__name__)
 
-dash_app = dash.Dash(__name__, server = app, url_base_pathname = '/')
+dash_app = dash.Dash(__name__, server = app, url_base_pathname = '/', serve_locally=True)
 dash_app.config.update({
         # 'routes_pathname_prefix': '/',
         # 'requests_pathname_prefix': 'analytics/',
