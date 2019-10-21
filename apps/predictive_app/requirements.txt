@@ -10,7 +10,7 @@ scipy==1.2.0
 sklearn==0.0
 matplotlib==3.0.3
 yellowbrick==0.9.1
-nltk==3.4.1
+nltk==3.4.5
 visdcc==0.0.40
 openpyxl==2.6.2
 xlrd==1.2.0
